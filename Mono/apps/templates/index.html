@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'common/css/style.css' %}">
+    <title>
+        {% block title %}
+        {{ title }}
+        {% endblock title %}
+    </title>
+</head>
+
+<body data-theme="light">
+<!-- Navigation -->
+{% include 'common/_navbar.html' %}
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>Shop by Categories</h1>
+        <p>Discover premium products in our carefully curated collections</p>
+    </div>
+</section>
+{% block main %}
+
+
+{% endblock main %}
+
+
+<section class="featured">
+    <div class="featured-container">
+        <h2 class="section-title">Featured Products</h2>
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300&h=200&fit=crop&crop=center"
+                         alt="Premium Watch">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Premium Watch</h3>
+                    <p class="product-price">$299</p>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=300&h=200&fit=crop&crop=center"
+                         alt="Smartphone">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Smartphone</h3>
+                    <p class="product-price">$699</p>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?w=300&h=200&fit=crop&crop=center"
+                         alt="Sport Shoes">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Sport Shoes</h3>
+                    <p class="product-price">$129</p>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=300&h=200&fit=crop&crop=center"
+                         alt="Laptop">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Laptop</h3>
+                    <p class="product-price">$999</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+{% include 'common/_footer.html' %}
+
+{% include 'common/_scripts.html' %}

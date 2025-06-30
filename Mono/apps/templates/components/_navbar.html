@@ -1,0 +1,45 @@
+{% load store_tags %}
+{% get_category_s as categories %}
+
+<header class="header">
+    <nav class="nav">
+        <div class="nav-brand">
+            <a href="{% url 'product_list' %}" class="logo">MONO</a>
+        </div>
+
+        {% for cat in categories %}
+        <div class="nav-center">
+            <ul class="nav-links">
+                <li><a href="{{ cat.get_absolute_url }}" class="nav-link active">{{ cat.title}}</a></li>
+            </ul>
+        </div>
+        {% endfor %}
+
+        {% if not request.user.is_authenticated %}
+        <div class="nav-actions">
+            <div class="auth-buttons" style="display: flex; gap: 0.5rem;">
+                <a href="{% url 'login' %}" class="btn btn-secondary">Login</a>
+                <a href="{% url 'register'  %}" class="btn btn-primary">Register</a>
+            </div>
+        </div>
+        {% else %}
+        <div class="nav-actions">
+            <form method="get" action="{% url 'search' %}">
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input name="q" type="text" placeholder="Search products..." class="search-input">
+
+                </div>
+            </form>
+            <div class="glyphicon-log-out" style="display: flex; gap: 0.5rem;">
+                <a href="{% url 'user_pofile' %}">My Profile</a>
+            </div>
+
+            <a href="{% url 'cart' %}" class="cart-icon">
+                <i class="fas fa-shopping-bag"></i>
+                <span class="cart-count" id="cart-count">0</span>
+            </a>
+        </div>
+        {% endif %}
+    </nav>
+</header>

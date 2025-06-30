@@ -1,0 +1,63 @@
+{% load static %}
+
+<script>
+    const toggleBtn = document.getElementById('toggleCategoryView');
+    const grid = document.querySelector('.category-grid');
+    const cards = document.querySelectorAll('.category-card');
+    const total = cards.length;
+
+    let currentIndex = 0;
+    let intervalId = null;
+
+    function updateTransforms() {
+        cards.forEach((card, i) => {
+            const index = (i + currentIndex) % total;
+
+            // Center (markazdagi karta)
+            if (index === 0) {
+                card.style.transform = `translateZ(600px) scale(1)`;
+                card.style.zIndex = 10;
+                card.style.opacity = 1;
+            } else {
+                const angle = index * (360 / (total - 1)); // 360/7
+                card.style.transform = `rotateY(${angle}deg) translateZ(400px) scale(0.7)`;
+                card.style.zIndex = 5 - index;
+                card.style.opacity = 0.6;
+            }
+        });
+    }
+
+    function startCarousel() {
+        updateTransforms();
+        intervalId = setInterval(() => {
+            currentIndex = (currentIndex + 1) % total;
+            updateTransforms();
+        }, 2000);
+    }
+
+    function stopCarousel() {
+        clearInterval(intervalId);
+        intervalId = null;
+
+        // Reset cards to grid
+        cards.forEach(card => {
+            card.style.transform = '';
+            card.style.zIndex = '';
+            card.style.opacity = '';
+        });
+    }
+
+    toggleBtn.addEventListener('click', () => {
+        const isActive = grid.classList.toggle('carousel-view');
+        toggleBtn.innerText = isActive ? 'Switch to Grid View' : 'Switch View';
+
+        if (isActive) {
+            startCarousel();
+        } else {
+            stopCarousel();
+        }
+    });
+</script>
+
+
+<script src="{% static 'js/auth.js' %}"></script>
