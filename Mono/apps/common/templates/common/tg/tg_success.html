@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xush kelibsiz!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .success-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .user-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #fff;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            margin: 10px;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="success-icon">✅</div>
+    <h1>Xush kelibsiz!</h1>
+
+    {% if user %}
+    <div class="user-info">
+        <h3>{{ user.first_name }} {{ user.last_name|default:"" }}</h3>
+        {% if user.username %}
+        <p>@{{ user.username }}</p>
+        {% endif %}
+        {% if user.phone %}
+        <p>📱 {{ user.phone }}</p>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <p>{{ message|default:"Telegram orqali muvaffaqiyatli kirdingiz!" }}</p>
+
+    <div style="margin-top: 30px;">
+        <a href="/" class="btn">🏠 Bosh sahifa</a>
+        <a href="#" class="btn" onclick="window.history.back()">🔙 Orqaga</a>
+    </div>
+</div>
+</body>
+</html>

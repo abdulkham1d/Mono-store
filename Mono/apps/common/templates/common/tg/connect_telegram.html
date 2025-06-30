@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram bog'lash</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0088cc 0%, #005580 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .telegram-icon {
+            font-size: 4rem;
+            color: #0088cc;
+            margin-bottom: 20px;
+        }
+
+        .title {
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .description {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .steps {
+            text-align: left;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .steps h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .steps ol {
+            color: #666;
+            padding-left: 20px;
+        }
+
+        .steps li {
+            margin: 10px 0;
+            line-height: 1.5;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #0088cc 0%, #005580 100%);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+            margin: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn::before {
+            content: "📱 ";
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            .title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="telegram-icon">📱</div>
+    <h1 class="title">Telegram bog'lash</h1>
+
+    <p class="description">
+        Telegram akkauntingizni sayt bilan bog'lash uchun quyidagi tugmani bosing va botga /start buyrug'ini yuboring.
+    </p>
+
+    <div class="steps">
+        <h3>Qadamlar:</h3>
+        <ol>
+            <li>Quyidagi tugmani bosing</li>
+            <li>Telegram botga o'ting</li>
+            <li>/start buyrug'ini yuboring</li>
+            <li>Telefon raqamingizni yuboring</li>
+            <li>Saytga qaytib keling</li>
+        </ol>
+    </div>
+
+    <div>
+        <a href="{{ bot_url }}" class="btn" target="_blank">Telegram botga o'tish</a>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <a href="/" style="color: #666; text-decoration: none;">← Asosiy sahifaga qaytish</a>
+    </div>
+</div>
+</body>
+</html>
