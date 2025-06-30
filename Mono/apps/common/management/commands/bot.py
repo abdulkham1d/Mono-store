@@ -17,7 +17,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Bot tokenini settings.py ga qo'shing yoki bu yerga yozing
-BOT_TOKEN = "7591508497:AAEfJ2fcgCq4P-58CqU_sSxR-QofDjLmSpA"  # O'zingizning tokeningizni qo'ying
+BOT_TOKEN = "Your bot token"  # O'zingizning tokeningizni qo'ying
 
 
 class TelegramBot:
