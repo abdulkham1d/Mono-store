@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+{% block main %}
+<main>
+
+
+    {% include 'store/components/_hero_section.html' %}
+
+
+    {% for category in categories %}
+
+    {% include 'store/components/_category_section.html' %}
+
+    {% endfor %}
+
+</main>
+{% endblock main %}

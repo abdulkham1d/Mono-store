@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+{% block main %}
+
+<main>
+    <br>
+    <br>
+    <h2 class="section-title">All Products in {{ subcategory.title }}</h2>
+
+    {% include 'store/components/_category_page_filters.html' %}
+
+    {% include 'store/components/_category_page_products.html' %}
+
+</main>
+
+
+{% endblock main %}

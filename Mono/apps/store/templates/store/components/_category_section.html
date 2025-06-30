@@ -1,0 +1,25 @@
+{% load static %}
+<section class="categories">
+    <div class="container">
+        <div style="text-align: right; margin: 1rem;">
+            <button id="toggleCategoryView" class="btn btn-secondary">Switch View</button>
+        </div>
+        <h2 class="section-title">{{ category.title }}</h2>
+
+        <div class="category-grid">
+            {% for cat in category.subcategories.all %}
+            <div class="category-card">
+                <img src="{{ cat.get_image }}"
+                     alt="Fashion" class="category-image">
+                <div class="category-content">
+                    <h3 class="category-title">{{ cat.title }}</h3>
+                    <p class="category-desc">Timeless pieces for every occasion</p>
+                    <a href="{% url 'subcategory_products' cat.slug %}" class="btn btn-secondary">All products</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+
+    </div>
+</section>

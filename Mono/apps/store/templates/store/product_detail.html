@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+{% block main %}
+
+<main>
+    <!-- Product Detail -->
+    <section class="product-detail">
+        <div class="container">
+            <div class="product-detail-grid">
+                <!-- Product Images -->
+                {% include 'store/components/_product_detail_images.html' %}
+
+                {% include 'store/components/_product_detail_info.html' %}
+                <!-- Product Info  i shoul do this one-->
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Tabs -->
+    <section class="product-tabs">
+        <div class="container">
+            <div class="tabs-header">
+                <button class="tab-btn active" data-tab="description">Description</button>
+                <button class="tab-btn" data-tab="specifications">Specifications</button>
+                <button class="tab-btn" data-tab="reviews">Reviews</button>
+            </div>
+
+            <div class="tabs-content">
+
+                {% include 'store/components/_product_detail_description.html' %}
+
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<script>
+            // Quantity controls
+            function increaseQuantity() {
+                const input = document.getElementById('quantity');
+                const current = parseInt(input.value);
+                if (current < 10) {
+                    input.value = current + 1;
+                }
+            }
+
+            function decreaseQuantity() {
+                const input = document.getElementById('quantity');
+                const current = parseInt(input.value);
+                if (current > 1) {
+                    input.value = current - 1;
+                }
+            }
+
+            // Tab functionality
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tabId = btn.getAttribute('data-tab');
+
+                    // Remove active class from all tabs and panels
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+
+                    // Add active class to clicked tab and corresponding panel
+                    btn.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+
+            // Thumbnail image switching
+            document.querySelectorAll('.thumbnail').forEach(thumb => {
+                thumb.addEventListener('click', () => {
+                    const mainImage = document.querySelector('.product-main-image');
+                    const newSrc = thumb.src;
+
+                    // Remove active class from all thumbnails
+                    document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+
+                    // Add active class to clicked thumbnail
+                    thumb.classList.add('active');
+
+                    // Update main image
+                    mainImage.src = newSrc;
+                });
+            });
+        </script>
+{% endblock main %}
+

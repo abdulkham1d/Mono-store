@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+{% block main %}
+
+<section class="cart-section">
+    <div class="container">
+        <div class="cart-layout">
+            <!-- Cart Items -->
+            <div class="cart-items">
+                <div class="cart-header">
+                    <h2>Products: <strong>{{ order.get_cart_total_quantity }}</strong></h2>
+                    <a href="{% url 'clear_cart' %}" class="clear-cart">Clear All</a>
+                </div>
+
+                {% for item in products %}
+                <div class="cart-item">
+                    <div class="item-image">
+                        <img src="{{ item.product.get_first_photo }}" alt="{{ item.product.title }}">
+                    </div>
+                    <div class="item-details">
+                        <h3 class="item-title">{{ item.product.title }}</h3>
+                        <h5>Products need {{ item.product.quantity }}</h5>
+                        <div class="item-price">
+                            <span class="current-price">{{ item.product.price }} $</span>
+                        </div>
+                    </div>
+                    <div class="item-quantity">
+
+                        <a href="{% url 'to_cart' item.product.pk 'delete' %}" class="qty-btn update-cart"
+                           data-action="delete" data-product=>-</a>
+                        <span class="qty-value">{{ item.quantity }}</span>
+                        {% if item.product.quantity > 0 %}
+                        <a href="{% url 'to_cart' item.product.pk 'add' %}" class="qty-btn update-cart"
+                           data-action="add" data-product="{{ item.product.pk }}">+</a>
+                        {% else %}
+                        <a href="" class="qty-btn update-cart"
+                           data-action="add" data-product="{{ item.product.pk }}">+</a>
+                        {% endif %}
+                    </div>
+                    <div class="item-total-price">
+                        <span>{{ item.get_total_price }} $</span>
+                    </div>
+                    <a href="{% url 'to_cart' item.product.pk 'delete' %}" class="remove-item">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </div>
+                {% endfor %}
+
+                <!-- Continue Shopping -->
+                <div class="continue-shopping">
+                    <a href="{% url 'product_list' %}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i>
+                        Continue Shopping
+                    </a>
+                </div>
+            </div>
+
+            <!-- Cart Summary -->
+            <div class="cart-summary">
+                <div class="summary-card">
+                    <h3 class="summary-title">Order Summary</h3>
+
+                    <div class="summary-row">
+                        <span>Subtotal ({{ order.get_cart_total_quantity }} items)</span>
+                        <span id="subtotal">{{ order.get_cart_total_price }} $</span>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Shipping</span>
+                        <span class="free">Free</span>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Tax</span>
+                        <span id="tax">{{ order.get_cart_tax }} $</span>
+                    </div>
+
+                    <div class="summary-divider"></div>
+
+                    <div class="summary-row total">
+                        <span>Total</span>
+                        <span id="total">{{ order.get_cart_total_price }} $</span>
+                    </div>
+                    {% if order.get_cart_total_quantity > 0 %}
+                    <a href="{% url 'checkout' %}" class="btn btn-primary btn-large checkout-btn">
+                        Proceed to Checkout
+                    </a>
+                    {% else %}
+                    <a href="" class="btn btn-primary btn-large checkout-btn">
+                        Proceed to Checkout
+                    </a>
+                    {% endif %}
+                    <!-- Payment Methods -->
+                    <div class="payment-methods">
+                        <p>We accept:</p>
+                        <div class="payment-icons">
+                            <i class="fab fa-cc-visa"></i>
+                            <i class="fab fa-cc-mastercard"></i>
+                            <i class="fab fa-cc-amex"></i>
+                            <i class="fab fa-cc-paypal"></i>
+                            <i class="fab fa-cc-stripe"></i>
+                        </div>
+                    </div>
+
+                    <!-- Security Notice -->
+                    <div class="security-notice">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Secure checkout with SSL encryption</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock main %}

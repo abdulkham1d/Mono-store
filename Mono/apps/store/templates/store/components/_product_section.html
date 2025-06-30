@@ -1,0 +1,35 @@
+<div class="product-card">
+    {% if product.quantity > 0 %}
+    <div class="product-image-container">
+        <img src="{{ product.get_first_photo }}"
+             alt="Premium Jacket" class="product-image">
+        <div class="product-overlay">
+            <a href="{{ product.get_absolute_url }}" class="btn btn-primary">View Details</a>
+        </div>
+    </div>
+    <div class="product-info">
+        <h3 class="product-title">{{ product.title }}</h3>
+        <p class="product-category">{{ product.category }}</p>
+        <p class="product-category"><b>Model</b>: {{ product.model }}</p>
+        <p class="product-price">${{ product.price }}</p>
+    </div>
+    <div class="text-center">
+        {% include 'store/components/_add_to_favourite.html' %}
+
+    </div>
+    {% else %}
+    <div class="product-image-container">
+        <img src="{{ product.get_first_photo }}"
+             alt="Premium Jacket" class="product-image">
+        <div class="product-overlay">
+            <a href="" class="btn btn-primary">Sold out</a>
+        </div>
+    </div>
+    <div class="product-info">
+        <h3 class="product-title">{{ product.title }}</h3>
+        <p class="product-category">{{ product.category }}</p>
+        <p class="product-category"><b>Model</b>: {{ product.model }}</p>
+        <p class="product-price">$ Sold out {{ product.price }}</p>
+    </div>
+    {% endif %}
+</div>

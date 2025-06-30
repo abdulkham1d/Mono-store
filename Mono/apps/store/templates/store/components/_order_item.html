@@ -1,0 +1,11 @@
+<div class="order-item">
+    <div class="item-image">
+        <img  style="" src="{{ item.product.get_first_photo }}" alt="{{ item.product.title }}">
+    </div>
+    <div class="item-details">
+        <h3>{{ item.product.title}}</h3>
+        <p>Size: {{ item.product.size }}</p>
+        <p>Qty: {{ item.product.quantity }}</p>
+    </div>
+    <div class="item-price">${{ item.product.price }}</div>
+</div>

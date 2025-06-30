@@ -1,0 +1,311 @@
+{% load static %}
+
+{% block title %}
+{% endblock title %}
+
+{% block main %}
+<title>My Profile - Mono Store</title>
+<link rel="stylesheet" href="{% static 'css/user_profile.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body>
+<!-- Header -->
+<header class="header">
+    <div class="container">
+        <div class="header-content">
+            <div class="logo">
+                <h1>MONO </h1>
+            </div>
+            <nav class="nav">
+                <a href="{% url 'product_list'  %}" class="nav-link">Home</a>
+                <a href="{% url 'user_pofile' %}" class="nav-link">Profile</a>
+                <a href="{% url 'contact' %}" class="nav-link">Contact</a>
+                <a href="{% url 'my_favourite' %}" class="nav-link">My Favourite products</a>
+                <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<main class="main">
+    <div class="container">
+        <div class="profile-container">
+            <!-- Sidebar -->
+            <aside class="profile-sidebar">
+                <div class="profile-card">
+                    <div class="profile-avatar">
+                        <i data-feather="user" size="80"></i>
+                    </div>
+                    <h3 class="profile-name">John Doe</h3>
+                    <p class="profile-email">john.doe@example.com</p>
+                    <p class="profile-member">Member since 2023</p>
+                </div>
+                <nav class="profile-nav">
+                    <a href="#" class="profile-nav-link active" data-tab="personal-info">
+                        <i data-feather="user"></i>
+                        Personal Information
+                    </a>
+                    <a href="#" class="profile-nav-link" data-tab="order-history">
+                        <i data-feather="package"></i>
+                        Order History
+                    </a>
+                    <a href="#" class="profile-nav-link" data-tab="addresses">
+                        <i data-feather="map-pin"></i>
+                        Addresses
+                    </a>
+                    <a href="#" class="profile-nav-link" data-tab="security">
+                        <i data-feather="shield"></i>
+                        Security & Privacy
+                    </a>
+                </nav>
+            </aside>
+
+            <!-- Content Area -->
+            <section class="profile-content">
+                <!-- Personal Information Tab -->
+                <div id="personal-info" class="tab-content active">
+                    <div class="content-header">
+                        <h2>Personal Information</h2>
+                        <button class="btn btn-primary" id="edit-personal-btn">
+                            <i data-feather="edit-2"></i>
+                            Edit
+                        </button>
+                    </div>
+                    <form class="profile-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="first-name">First Name</label>
+                                <input type="text" id="first-name" name="first-name" value="John" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="last-name">Last Name</label>
+                                <input type="text" id="last-name" name="last-name" value="Doe" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" name="email" value="john.doe@example.com" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" value="+9989 (99) 123 45 67" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="birth-date">Date of Birth</label>
+                                <input type="date" id="birth-date" name="birth-date" value="1990-05-15" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="gender">Gender</label>
+                                <select id="gender" name="gender" disabled>
+                                    <option value="male" selected>Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                    <option value="prefer-not-to-say">Prefer not to say</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Order History Tab -->
+                {% include 'store/components/_order_history.html' %}
+
+                <!-- Addresses Tab -->
+                <div id="addresses" class="tab-content">
+                    <div class="content-header">
+                        <h2>Saved Addresses</h2>
+                        <button class="btn btn-primary" id="add-address-btn">
+                            <i data-feather="plus"></i>
+                            Add New Address
+                        </button>
+                    </div>
+                    <div class="addresses-grid">
+                        <div class="address-card default">
+                            <div class="address-header">
+                                <h4>Home</h4>
+                                <span class="default-badge">Default</span>
+                            </div>
+                            <div class="address-details">
+                                <p>123 Main Street</p>
+                                <p>Apartment 4B</p>
+                                <p>New York, NY 10001</p>
+                                <p>United States</p>
+                            </div>
+                            <div class="address-actions">
+                                <button class="btn btn-secondary">
+                                    <i data-feather="edit-2"></i>
+                                    Edit
+                                </button>
+                                <button class="btn btn-danger">
+                                    <i data-feather="trash-2"></i>
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                        <div class="address-card">
+                            <div class="address-header">
+                                <h4>Work</h4>
+                            </div>
+                            <div class="address-details">
+                                <p>456 Business Ave</p>
+                                <p>Suite 200</p>
+                                <p>New York, NY 10002</p>
+                                <p>United States</p>
+                            </div>
+                            <div class="address-actions">
+                                <button class="btn btn-secondary">
+                                    <i data-feather="edit-2"></i>
+                                    Edit
+                                </button>
+                                <button class="btn btn-danger">
+                                    <i data-feather="trash-2"></i>
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security Tab -->
+                <div id="security" class="tab-content">
+                    <div class="content-header">
+                        <h2>Security & Privacy</h2>
+                    </div>
+
+                    <div class="security-section">
+                        <h3>Password</h3>
+                        <div class="security-option">
+                            <div class="option-info">
+                                <h4>Change Password</h4>
+                                <p>Update your password regularly to keep your account secure</p>
+                            </div>
+                            <button class="btn btn-primary">
+                                <i data-feather="lock"></i>
+                                Change Password
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="security-section">
+                        <h3>Two-Factor Authentication</h3>
+                        <div class="security-option">
+                            <div class="option-info">
+                                <h4>SMS Authentication</h4>
+                                <p>Receive security codes via SMS to your phone</p>
+                            </div>
+                            <label class="toggle">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="security-option">
+                            <div class="option-info">
+                                <h4>Email Authentication</h4>
+                                <p>Receive security notifications via email</p>
+                            </div>
+                            <label class="toggle">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="security-section">
+                        <h3>Privacy Settings</h3>
+                        <div class="security-option">
+                            <div class="option-info">
+                                <h4>Marketing Emails</h4>
+                                <p>Receive promotional emails and special offers</p>
+                            </div>
+                            <label class="toggle">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="security-option">
+                            <div class="option-info">
+                                <h4>Order Updates</h4>
+                                <p>Receive notifications about your order status</p>
+                            </div>
+                            <label class="toggle">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</main>
+
+<script>
+    // Initialize Feather Icons
+    feather.replace();
+
+    // Tab switching functionality
+    const navLinks = document.querySelectorAll('.profile-nav-link');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            // Remove active class from all nav links and tab contents
+            navLinks.forEach(nl => nl.classList.remove('active'));
+            tabContents.forEach(tc => tc.classList.remove('active'));
+
+            // Add active class to clicked nav link
+            link.classList.add('active');
+
+            // Show corresponding tab content
+            const tabId = link.getAttribute('data-tab');
+            document.getElementById(tabId).classList.add('active');
+        });
+    });
+
+    // Edit personal information functionality
+    const editBtn = document.getElementById('edit-personal-btn');
+    const formInputs = document.querySelectorAll('#personal-info input, #personal-info select');
+    let isEditing = false;
+
+    editBtn.addEventListener('click', () => {
+        if (!isEditing) {
+            // Enter edit mode
+            formInputs.forEach(input => {
+                input.removeAttribute('readonly');
+                input.removeAttribute('disabled');
+            });
+            editBtn.innerHTML = '<i data-feather="save"></i> Save Changes';
+            editBtn.classList.add('save-mode');
+            isEditing = true;
+        } else {
+            // Save changes and exit edit mode
+            formInputs.forEach(input => {
+                if (input.tagName === 'SELECT') {
+                    input.setAttribute('disabled', '');
+                } else {
+                    input.setAttribute('readonly', '');
+                }
+            });
+            editBtn.innerHTML = '<i data-feather="edit-2"></i> Edit';
+            editBtn.classList.remove('save-mode');
+            isEditing = false;
+
+            // Here you would typically send the data to your backend
+            console.log('Saving personal information...');
+        }
+        feather.replace();
+    });
+
+    // Toggle switches functionality
+    const toggles = document.querySelectorAll('.toggle input[type="checkbox"]');
+    toggles.forEach(toggle => {
+        toggle.addEventListener('change', () => {
+            console.log(`Setting ${toggle.closest('.security-option').querySelector('h4').textContent} to ${toggle.checked ? 'enabled' : 'disabled'}`);
+        });
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% load store_tags %}
+{% get_sorted as data %}
+
+
+<section class="filters-section">
+    <div class="container">
+        <form method="get" class="filters-bar">
+            <div class="filters-left">
+                {% for key in data %}
+                <div class="filter-group">
+                    <label for="sort-{{ forloop.counter }}">{{ key.title }}:</label>
+                    <select id="sort-{{ forloop.counter }}" name="sort" class="filter-select" onchange="this.form.submit()">
+                        {% for sorter in key.sorters %}
+                        <option value="{{ sorter.0 }}" {% if request.GET.sort == sorter.0 %}selected{% endif %}>{{ sorter.1 }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% endfor %}
+            </div>
+        </form>
+    </div>
+</section>
+

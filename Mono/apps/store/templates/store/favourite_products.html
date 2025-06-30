@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+{% block main %}
+
+<main>
+    <section class="featured-products">
+        <div class="container">
+            <div class="product-grid">
+                {% for product in products %}
+                {% include 'store/components/_product_section.html' %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</main>
+
+{% endblock main %}

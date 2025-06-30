@@ -1,0 +1,26 @@
+<div id="order-history" class="tab-content">
+    <div class="content-header">
+        <h2>Order History</h2>
+    </div>
+    <div class="orders-list">
+        {% for order in orders.all %}
+        <div class="order-item">
+            <div class="order-info">
+                <div class="order-number">#ORD-{{ order.created_at.year }}-{{ order.id|stringformat:"03d" }}</div>
+                <div class="order-date">{{ order.created_at|date:"F d, Y" }}</div>
+                <div class="order-status delivered">Paid successfully </div>
+            </div>
+            <div class="order-details">
+                <p><strong>${{ order.get_cart_total_price }}</strong></p>
+                <p>{{ order.get_cart_total_quantity }} items</p>
+            </div>
+            <button class="btn btn-secondary order-view">
+                <i data-feather="eye"></i>
+                View Details
+            </button>
+        </div>
+        {% empty %}
+        <p>You don't have any orders yet..</p>
+        {% endfor %}
+    </div>
+</div>

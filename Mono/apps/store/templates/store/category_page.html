@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+{% block main %}
+<main>
+
+    {% include 'store/components/_category_page_header.html' %}
+
+    <section class="featured-products">
+        <div class="container">
+            {% for cat in category.subcategories.all %}
+            {% include 'store/components/_featured_category.html' %}
+
+
+            <div class="product-grid">
+                {% for product in cat.products.all|slice:":3" %}
+                {% include 'store/components/_product_section.html' %}
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+</main>
+{% endblock main %}

@@ -1,0 +1,13 @@
+<div class="product-images">
+    <div class="main-image">
+        {% if product.images.first %}
+            <img src="{{ product.images.first.image.url }}" alt="{{ product.title }}" class="product-main-image">
+        {% endif %}
+    </div>
+    <div class="thumbnail-images">
+        {% for image in product.images.all %}
+            <img src="{{ image.image.url }}" alt="{{ product.title }} thumbnail {{ forloop.counter }}"
+                 class="thumbnail ">
+        {% endfor %}
+    </div>
+</div>

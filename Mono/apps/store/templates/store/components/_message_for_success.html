@@ -1,0 +1,137 @@
+{% load static %}
+
+{% block main  %}
+<link rel="stylesheet" href="{% static 'css/success.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+</head>
+<body>
+<!-- Main Content -->
+<main class="main-container">
+    <div class="container">
+        <div class="success-container" id="invoice-container">
+            <div class="success-header">
+                <div class="check-container">
+                    <div class="circle"></div>
+                    <div class="checkmark">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+                <h1 class="success-title">Payment Successful!</h1>
+                <p class="success-subtitle">Thank you for your purchase. Your order has been confirmed and will be
+                    processed shortly.</p>
+            </div>
+
+            <div class="success-body">
+                <!-- Invoice Header (hidden in normal view, shown in PDF) -->
+                <div class="invoice-header" style="display: none;">
+                    <h1 class="invoice-title">INVOICE</h1>
+                    <p>Invoice Date: <span id="invoice-date"></span></p>
+                </div>
+
+                <div class="order-details">
+                    <h2 class="section-title">
+                        <i class="fas fa-box-open"></i> Order Details
+                    </h2>
+
+                    <div class="order-items">
+                        <!-- Sample order items -->
+                        {% for item in ordered_products %}
+                        <div class="order-item">
+                            <div class="item-image">
+                                {% if item.product.images %}
+                                <img style="width: 100px; height: 100px;" src="{{ item.product.get_first_photo }}"
+                                     alt="{{ item.product.name }}">
+                                {% else %}
+                                <i class="fas fa-box"></i>
+                                {% endif %}
+                            </div>
+                            <div class="item-details">
+                                <div class="item-name">{{ item.product.title }}</div>
+                            </div>
+                            <div class="item-price">${{ item.get_total_price }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="order-summary">
+                    <h2 class="section-title">
+                        <i class="fas fa-file-invoice-dollar"></i> Order Summary
+                    </h2>
+
+                    <div class="summary-row">
+                        <span class="summary-label">Product Quantity</span>
+                        <span class="summary-value">{{ order.get_cart_total_quantity }} item</span>
+                    </div>
+
+                    <div class="summary-row">
+                        <span class="summary-label">Subtotal</span>
+                        <span class="summary-value">${{ order.get_cart_total_price }}</span>
+                    </div>
+
+                    <div class="summary-row">
+                        <span class="summary-label">Shipping</span>
+                        <span class="summary-value">Free</span>
+                    </div>
+
+
+                    <div class="summary-row total-row">
+                        <span class="summary-label">Total</span>
+                        <span class="summary-value">${{ order.get_cart_total_price }}</span>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <a href="{% url 'product_list' %}" class="btn btn-primary">
+                        <i class="fas fa-shopping-bag"></i> Continue Shopping
+                    </a>
+                    <button class="btn btn-secondary" id="download-pdf-btn">
+                        <div class="loading-spinner"></div>
+                        <span class="btn-text">
+                                <i class="fas fa-download"></i> Download Invoice
+                            </span>
+                    </button>
+                    <a href="{% url 'user_pofile' %}" class="btn btn-secondary">
+                        <i class="fas fa-user"></i> Profile
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const downloadBtn = document.getElementById('download-pdf-btn');
+
+        downloadBtn.addEventListener('click', function () {
+            // Add date
+            const now = new Date();
+            const formattedDate = `${now.getDate().toString().padStart(2, '0')}.${(now.getMonth() + 1).toString().padStart(2, '0')}.${now.getFullYear()}`;
+            document.getElementById('invoice-date').textContent = formattedDate;
+
+            // Temporarily show invoice header
+            const header = document.querySelector('.invoice-header');
+            const buttons = document.querySelector('.action-buttons');
+            header.style.display = 'block';
+            buttons.style.display = 'none';
+
+            window.print();
+
+            // Restore original state after print
+            setTimeout(() => {
+                header.style.display = 'none';
+                buttons.style.display = 'flex';
+            }, 1000);
+        });
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+</body>
+</html>
+
+{% endblock main  %}
+

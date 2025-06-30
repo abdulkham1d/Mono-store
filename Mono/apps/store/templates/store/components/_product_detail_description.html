@@ -1,0 +1,37 @@
+<div class="tab-panel active" id="description">
+    <h3>Full Description</h3>
+    <p>{{ product.description|linebreaks }}</p>
+</div>
+
+
+<div class="tab-panel" id="specifications">
+    <h3>Specifications</h3>
+    <table class="spec-table">
+        <tr>
+            <td>Material</td>
+            <td>{{ product.material }}</td>
+        </tr>
+        <tr>
+            <td>Model</td>
+            <td>{{ product.model}}</td>
+        </tr>
+        <tr>
+            <td>Size</td>
+            <td>{{ product.size}} mm</td>
+        </tr>
+        <tr>
+            <td>Country of Origin</td>
+            <td>Made in {{ product.country_of_origin }}</td>
+        </tr>
+        <tr>
+            <td>Warranty</td>
+            <td>{{ product.warranty }}</td>
+        </tr>
+    </table>
+</div>
+
+
+{% include 'store/components/_comment.html' %}
+
+
+

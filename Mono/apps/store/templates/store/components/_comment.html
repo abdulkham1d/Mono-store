@@ -1,0 +1,338 @@
+<!-- Minimalist Reviews Tab Panel -->
+<div class="tab-panel" id="reviews">
+    <div class="reviews-section">
+        <div class="reviews-header">
+            <h3>Customer Reviews</h3>
+            {% if user.is_authenticated %}
+            <button class="write-review-btn" onclick="toggleReviewForm()">Write a Review</button>
+            {% else %}
+            <a href="{% url 'login' %}" class="login-btn">Login to Write Review</a>
+            {% endif %}
+        </div>
+
+        <!-- Review Form (Only for authenticated users) -->
+
+        <div class="review-form" id="reviewForm" style="display: none;">
+            <h4>Write Your Review</h4>
+            <form action="{% url 'save_review' product.pk %}" method="POST" enctype="multipart/form-data"
+                  style="text-align: center;">
+                {% csrf_token %}
+                {{ review_form.text }}
+                <div class="form-actions">
+                    <button type="button" onclick="cancelReview()" class="cancel-btn">Cancel</button>
+                    <button type="submit" class="submit-btn">Submit Review</button>
+                </div>
+            </form>
+        </div>
+
+
+        <!-- Reviews List -->
+        <div class="reviews-list" id="reviewsList">
+            {% for review in reviews %}
+            <div class="review-item">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <strong>Who: {{ review.author.username }}</strong>
+                        <span class="review-date">When: {{ review.created_at }}</span>
+                    </div>
+                    {% if user.is_staff %}
+                    <form action="{% url 'delete_review' review.id %}" method="POST" class="delete-form"
+                          onsubmit="return confirm('Are you sure you want to delete this review?');">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-btn" title="Delete review">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="white" width="16" height="16"
+                                 viewBox="0 0 24 24">
+                                <path d="M3 6h18v2H3V6zm2 3h14v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V9zm5 3v6h2v-6H10zm4 0v6h2v-6h-2z"/>
+                            </svg>
+                        </button>
+                    </form>
+                    {% endif %}
+                </div>
+                <p class="review-text">{{ review.text }}</p>
+            </div>
+
+            {% empty %}
+            <div class="no-reviews">
+                <p>No reviews yet. Be the first to review this product!</p>
+            </div>
+            {% endfor %}
+
+        </div>
+
+        <!-- Load More Reviews -->
+        {% if product.reviews.count > 5 %}
+        <div class="load-more">
+            <button class="load-more-btn">Load More Reviews</button>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Minimalist CSS Styles -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+    .delete-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #111; /* Qora asos */
+        border: none;
+        padding: 6px 10px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-size: 14px;
+        width: 36px;
+        height: 36px;
+    }
+
+    .delete-btn svg {
+        fill: white; /* Oq rangdagi ikonkalar */
+        width: 18px;
+        height: 18px;
+    }
+
+    .delete-btn:hover {
+        background-color: #333; /* Hoverda ochroq qora */
+    }
+
+
+    .reviews-section {
+        max-width: 800px;
+        margin: 0 auto;
+        font-family: 'Inter', sans-serif;
+        padding: 40px 20px;
+        background: #fff;
+        color: #111;
+    }
+
+    .reviews-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+    }
+
+    .reviews-header h3 {
+        font-size: 24px;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .write-review-btn,
+    .login-btn {
+        background: #111;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 14px;
+        border-radius: 6px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: 0.3s ease;
+    }
+
+    .write-review-btn:hover,
+    .login-btn:hover {
+        background: #333;
+    }
+
+    .review-form {
+        background: #f4f4f4;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 25px;
+        margin-bottom: 30px;
+    }
+
+    .review-form h4 {
+        margin-bottom: 15px;
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        font-size: 14px;
+    }
+
+    .form-group textarea {
+        width: 100%;
+        padding: 14px 16px;
+        font-size: 15px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        resize: vertical;
+        min-height: 140px; /* Oldingi 100px o‘rniga */
+        line-height: 1.6;
+    }
+
+    .form-group textarea:focus {
+        border-color: #000;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+    }
+
+
+    .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+
+    .cancel-btn,
+    .submit-btn {
+        padding: 10px 20px;
+        border-radius: 6px;
+        border: none;
+        font-size: 14px;
+        cursor: pointer;
+        transition: 0.3s ease;
+        text-transform: uppercase;
+        font-weight: 500;
+    }
+
+    .cancel-btn {
+        background: transparent;
+        border: 1px solid #111;
+        color: #111;
+    }
+
+    .cancel-btn:hover {
+        background: #111;
+        color: #fff;
+    }
+
+    .submit-btn {
+        background: #111;
+        color: #fff;
+    }
+
+    .submit-btn:hover {
+        background: #333;
+    }
+
+    .review-item {
+        border-bottom: 1px solid #eee;
+        padding: 20px 0;
+    }
+
+    .review-item:last-child {
+        border-bottom: none;
+    }
+
+    .reviewer-info {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 10px;
+    }
+
+    .reviewer-info strong {
+        color: #000;
+    }
+
+    .review-text {
+        font-size: 16px;
+        color: #222;
+        line-height: 1.6;
+    }
+
+    .no-reviews {
+        text-align: center;
+        font-style: italic;
+        color: #777;
+        padding: 40px 0;
+    }
+
+    .load-more {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .load-more-btn {
+        background: transparent;
+        color: #111;
+        border: 1px solid #111;
+        padding: 12px 30px;
+        font-size: 14px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+    .load-more-btn:hover {
+        background: #111;
+        color: #fff;
+    }
+
+    @media (max-width: 768px) {
+        .reviews-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .form-actions {
+            flex-direction: column;
+            gap: 10px;
+            align-items: stretch;
+        }
+
+        .cancel-btn,
+        .submit-btn {
+            width: 100%;
+        }
+    }
+
+
+</style>
+
+<!-- Simplified JavaScript -->
+<script>
+    // Toggle review form
+    function toggleReviewForm() {
+        const form = document.getElementById('reviewForm');
+        if (form.style.display === 'none' || form.style.display === '') {
+            form.style.display = 'block';
+            form.scrollIntoView({behavior: 'smooth'});
+        } else {
+            form.style.display = 'none';
+        }
+    }
+
+    // Cancel review
+    function cancelReview() {
+        document.getElementById('reviewForm').style.display = 'none';
+        document.querySelector('form').reset();
+    }
+
+    // Submit review - now handled by Django form
+    function submitReview(event) {
+        // Form will be submitted to Django view
+        // No need to prevent default anymore
+    }
+
+    // Load more reviews
+    document.addEventListener('DOMContentLoaded', function () {
+        const loadMoreBtn = document.querySelector('.load-more-btn');
+        if (loadMoreBtn) {
+            loadMoreBtn.addEventListener('click', function () {
+                // Simple placeholder - you can connect this to your backend
+                this.textContent = 'Loading...';
+                setTimeout(() => {
+                    this.textContent = 'Load More Reviews';
+                    // Here you would normally load more reviews from server
+                }, 1000);
+            });
+        }
+    });
+</script>

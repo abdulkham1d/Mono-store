@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Register
+{% endblock title %}
+
+{% block main %}
+<section class="auth-section">
+    <div class="container">
+        <div class="auth-container">
+            <div class="auth-form-wrapper">
+                <div class="auth-header">
+                    <h1 class="auth-title">{{ title }}</h1>
+                    <p class="auth-subtitle">Join MONO and start your minimalist shopping journey</p>
+                </div>
+
+                <form action="" class="auth-form" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+
+                    <button type="submit" class="btn btn-primary btn-large auth-btn">
+                        Create Account
+                    </button>
+
+                    <div class="auth-divider">
+                        <span>or</span>
+                    </div>
+
+
+                    {% include 'store/components/_google.html' %}
+
+
+                    <div class="auth-footer">
+                        <p>Already have an account? <a href="{% url 'login' %}" class="auth-link">Sign in here</a></p>
+                    </div>
+                </form>
+
+                <div class="auth-benefits">
+                    <h3>Join the MONO Community</h3>
+                    <ul class="benefits-list">
+                        <li><i class="fas fa-check"></i> Exclusive access to new collections</li>
+                        <li><i class="fas fa-check"></i> Member-only discounts and offers</li>
+                        <li><i class="fas fa-check"></i> Priority customer support</li>
+                        <li><i class="fas fa-check"></i> Personalized recommendations</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock main %}

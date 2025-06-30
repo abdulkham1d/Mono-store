@@ -1,0 +1,46 @@
+<section class="products-section">
+    <div class="container">
+        <div class="products-grid">
+            <!-- Fashion Products -->
+            {% for product in products.all %}
+            {% if product.quantity > 0 %}
+            <div class="product-card" data-category="fashion">
+                <div class="product-image-container">
+                    <img src="{{ product.get_first_photo }}"
+                         alt="{{ product.title }}" class="product-image">
+                    <div class="product-overlay">
+                        <a href="{{ product.get_absolute_url }}" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">{{ product.title}}</h3>
+                    <p class="product-category">{{ product.category }}</p>
+                    <p class="product-price">${{ product.price }}</p>
+                </div>
+                {% include 'store/components/_add_to_favourite.html' %}
+            </div>
+            {% else %}
+            <div class="product-card" data-category="fashion">
+                <div class="product-image-container">
+                    <img src="{{ product.get_first_photo }}"
+                         alt="Classic Coat" class="product-image">
+                    <div class="product-overlay">
+                        <a href=" " class="btn btn-primary">Sold out</a>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">{{ product.title}}</h3>
+                    <p class="product-category">{{ product.category }}</p>
+                    <p class="product-price">Sold out</p>
+                </div>
+            </div>
+            {% endif %}
+
+            {% empty %}
+            <div class="btn-outline-info">
+                <a href="">No products in this subcategory.</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

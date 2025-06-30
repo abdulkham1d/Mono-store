@@ -1,0 +1,31 @@
+<div class="product-info-detail">
+
+    <div class="product-header">
+        <h1 class="product-title-detail">{{ product.title }}</h1>
+        <p class="product-category-detail">{{ product.category }}</p>
+    </div>
+
+    <div class="product-price-detail">
+        <span class="current-price">${{ product.price }}</span>
+    </div>
+
+    <div class="product-description">
+        <h2 class="product-title">About product</h2>
+        <p>{{ product.description|truncatewords:50 }}</p>
+    </div>
+
+    <div class="product-actions">
+        {% if product.quantity > 0 %}
+        <a href="{% url 'to_cart' product.id 'add' %}" class="btn btn-primary btn-large add-to-cart">
+            <i class="fas fa-shopping-cart"></i>
+            Add to Cart
+        </a>
+        {% else %}
+        <a href="" class="btn btn-primary btn-large add-to-cart">
+            <i class="fas fa-shopping-cart"></i>
+            Sold out
+        </a>
+        {% endif %}
+        {% include 'store/components/_add_to_favourite.html' %}
+    </div>
+</div>

@@ -1,0 +1,133 @@
+{% load static %}
+{% block main %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - MONO Store</title>
+    <link rel="stylesheet" href="{% static 'css/checkout.css' %}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+</head>
+<body>
+<div class="container">
+    <header class="header">
+        <div class="logo">
+            <h1>MONO</h1>
+            <span class="tagline">Minimalist Store</span>
+        </div>
+        <a href="{% url 'cart' %}" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to Cart
+        </a>
+    </header>
+
+    <div class="checkout-progress">
+        <div class="progress-step active">
+            <div class="step-number">1</div>
+            <span class="step-label">Checkout</span>
+            <div class="progress-line"></div>
+        </div>
+        <div class="progress-step">
+            <div class="step-number">2</div>
+            <span class="step-label">Payment</span>
+            <div class="progress-line"></div>
+        </div>
+        <div class="progress-step">
+            <div class="step-number">3</div>
+            <span class="step-label">Complete</span>
+            <div class="progress-line"></div>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <!-- Checkout Form -->
+        <form action="{% url 'payment' %}" method="POST" class="checkout-form">
+            {% csrf_token %}
+
+            <!-- Customer ma'lumotlari -->
+            <section class="form-section">
+                <h2>Customer Info</h2>
+                <div class="form-row">
+                    {% for field in customer_form %}
+                    <div class="form-group">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.errors %}
+                        <div class="form-error">{{ field.errors }}</div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <!-- Shipping Address ma'lumotlari -->
+            <section class="form-section">
+                <h2>Shipping Address</h2>
+                <div class="form-row">
+                    {% for field in shipping_form %}
+                    <div class="form-group">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.errors %}
+                        <div class="form-error">{{ field.errors }}</div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <button type="submit" class="complete-payment-btn">Complete Order</button>
+        </form>
+
+
+        <!-- Order Summary -->
+        <div class="order-summary">
+            <div class="summary-card">
+                <h2>Order Summary</h2>
+
+                <div class="order-items">
+                    {% for item in products %}
+                    {% include 'store/components/_order_item.html' %}
+                    {% endfor %}
+                </div>
+
+                <div class="order-totals">
+                    <div class="total-line">
+                        <span>Subtotal</span>
+                        <span>{{ order.get_cart_total_quantity }}</span>
+                    </div>
+                    <div class="total-line">
+                        <span>Shipping</span>
+                        <span id="shipping-cost">Free</span>
+                    </div>
+                    <div class="total-line total">
+                        <span>Total</span>
+                        <span id="final-total">${{ order.get_cart_total_price }}</span>
+                    </div>
+                </div>
+
+                <div class="security-badges">
+                    <div class="badge">
+                        <i class="fas fa-lock"></i>
+                        <span>Secure Checkout</span>
+                    </div>
+                    <div class="badge">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>SSL Encrypted</span>
+                    </div>
+                    <div class="badge">
+                        <i class="fas fa-credit-card"></i>
+                        <span>PCI Compliant</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+
+</body>
+</html>
+
+{% endblock main %}

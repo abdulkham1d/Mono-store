@@ -1,0 +1,18 @@
+{% load store_tags %}
+{% if request.user.is_authenticated %}
+{% get_favourite_products request.user as favourite_product %}
+{% endif %}
+<div class="add-to-favourite">
+    {% if request.user.is_authenticated and product in favourite_product %}
+    <button>
+        <a href="{% url 'add_favourite' product.slug %}" class="btn btn-secondary btn-large">
+            <i class="fas fa-heart"></i>
+            Added to Favourite </a>
+        {% else %}
+        <a href="{% url 'add_favourite' product.slug %}" class="btn btn-secondary btn-large">
+            <i class="fas fa-heart"></i>
+            Add to Wishlist
+        </a>
+        {% endif %}
+    </button>
+</div>
